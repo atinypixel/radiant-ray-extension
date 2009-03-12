@@ -809,8 +809,9 @@ end
 
 def set_restart_preference
   FileUtils.makedirs("#{@c}")
+  supported_servers = ["mongrel_cluster", "mongrel", "passenger", "thin"]
   preference = ENV["server"]
-  if preference == "mongrel_cluster" or preference == "passenger"
+  if supported_servers.include?(preference)
     File.open("#{@c}/restart.txt", "w") {|f| f.puts(preference)}
     messages = [
       "================================================================================",
