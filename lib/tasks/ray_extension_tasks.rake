@@ -783,8 +783,11 @@ def get_download_preference
     messages = [
       "================================================================================",
       "Your download preference is broken, to repair it run one of:",
+      "NOTE: `mongrel` and `thin` must be running as daemons",
       "rake ray:setup:restart server=mongrel_cluster",
-      "rake ray:setup:restart server=passenger"
+      "rake ray:setup:restart server=passenger",
+      "rake ray:setup:restart server=mongrel",
+      "rake ray:setup:restart server=thin",
     ]
     output(messages)
     exit
@@ -825,8 +828,12 @@ def set_restart_preference
       "I don't know how to restart #{preference}.",
       "Only Mongrel clusters and Phusion Passenger are currently supported.",
       "Run one of the following commands:",
+      "NOTE: `mongrel` and `thin` must be running as daemons",
       "rake ray:setup:restart server=mongrel_cluster",
-      "rake ray:setup:restart server=passenger"
+      "rake ray:setup:restart server=passenger",
+      "rake ray:setup:restart server=mongrel",
+      "rake ray:setup:restart server=thin"
+      
     ]
     output(messages)
     exit
