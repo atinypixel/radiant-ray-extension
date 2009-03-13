@@ -49,6 +49,7 @@ Authors
 
 * john muhl
 * Michael Kessler
+* Arik Jones
 
 MIT License
 ============
