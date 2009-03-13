@@ -662,6 +662,26 @@ repositories:
   url: http://github.com/alno/radiant-code-extension
   description: Extension which provides support for code highlighting to Radiant CMS via different code highlighting libraries (syntax,coderay,ultraviolet,highlight.js)
   owner: alno
+- name: ultrasphinx-search
+  url: http://github.com/Aissac/radiant-ultrasphinx-search-extension
+  description: Features, Full text search for content and page titles. Radius tags for iterating over search results, checking if there are no results and excerpting matches. Results pagination with will_paginate.
+  owner: Aissac
+- name: webservices
+  url: http://github.com/astashov/radiant-webservices-extension
+  description: Allows to use responses of remote webservices on your pages, e.g., weather, horoscopes, geocodes, etc.
+  owner: astashov
+- name: date-converter
+  url: http://github.com/astashov/radiant-date-converter-extension
+  description: Adds tag for converting dates from one format to another.
+  owner: astashov
+- name: truncate
+  url: http://github.com/astashov/radiant-truncate-extension
+  description: Adds tag for truncating contents.
+  owner: astashov
+- name: feed-reader
+  url: http://github.com/seancribbs/radiant-feed-reader-extension
+  description: Lets you parse and iterate over items from external RSS and Atom feeds. Requires the Feedzirra library.
+  owner: seancribbs
 # - name: radiant-gorillafy-extension
 #   url: http://github.com/jomz/radiant-gorillafy-extension
 #   description: Alters the admin interface and hosts some other snippets
