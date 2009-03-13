@@ -535,18 +535,18 @@ def run_extension_tasks
         env = "development"
       end
       if @uninstall
+        uninstall_error_messages = [
+          "The #{@name} extension failed to uninstall properly.",
+          "You can uninstall the extension manually by running:",
+          "rake #{env} radiant:extensions:#{@name}:migrate VERSION=0",
+          "and then removing any associated files and directories."
+        ]
         if tasks.include?("uninstall")
           begin
             sh("rake #{env} radiant:extensions:#{@name}:uninstall")
             puts("Successfully uninstalled")
           rescue Exception
-            messages = [
-              "================================================================================",
-              "The #{@name} extension failed to uninstall properly.",
-              "You can uninstall the extension manually by running:",
-              "rake #{env} radiant:extensions:#{@name}:migrate VERSION=0",
-              "and then removing any associated files and directories."
-            ]
+            messages = uninstall_error_messages
             output(messages)
             exit
           end
@@ -556,13 +556,7 @@ def run_extension_tasks
               sh("rake #{env} radiant:extensions:#{@name}:migrate VERSION=0")
               puts("Successfully migrated to VERSION=0")
             rescue Exception
-              messages = [
-                "================================================================================",
-                "The #{@name} extension failed to uninstall properly.",
-                "You can uninstall the extension manually by running:",
-                "rake radiant:extensions:#{@name}:migrate VERSION=0",
-                "and then removing any associated files and directories."
-              ]
+              messages = uninstall_error_messages
               output(messages)
               exit
             end
@@ -616,46 +610,7 @@ def run_extension_tasks
         end
       end
     end
-    puts("No tasks to run") if tasks.empty?
-    if @uninstall
-      if tasks.include?("uninstall")
-        begin
-          sh("rake radiant:extensions:#{@name}:uninstall")
-        rescue Exception => error
-          cause = "uninstall"
-          quarantine_extension(cause)
-        end
-      else
-        if tasks.include?("migrate")
-          begin
-            sh("rake radiant:extensions:#{@name}:migrate VERSION=0")
-          rescue Exception => error
-            cause = "migrate"
-            quarantine_extension(cause)
-          end
-        end
-        if tasks.include?("update")
-          require "find"
-          files = []
-          Find.find("#{@p}/#{@name}/public") { |file| files << file }
-          files.each do |f|
-            if f.include?(".")
-              unless f.include?(".DS_Store")
-                file = f.gsub(/#{@p}\/#{@name}\/public/, "public")
-                FileUtils.rm("#{file}", :force => true)
-              end
-            end
-          end
-          messages = [
-            "I tried to delete assets associated with the #{@name} extension,",
-            "but may have missed some while trying not to delete anything accidentally.",
-            "You may want manually clean up your public directory after an uninstall."
-          ]
-          output(messages)
-        end
-      end
-    else
-    end
+    puts("The #{@name} extension has no tasks to run.") if tasks.empty?
   else
     puts("The #{@name} extension has no task file.")
   end
@@ -676,10 +631,7 @@ def uninstall_extension
   FileUtils.makedirs("#{@r}/tmp")
   FileUtils.mv("#{@p}/#{@name}", "#{@r}/tmp/#{@name}")
   remove_dir("#{@r}/tmp")
-  messages = [
-    "================================================================================",
-    "The #{@name} extension has been uninstalled."
-  ]
+  messages = ["The #{@name} extension has been uninstalled."]
   output(messages)
 end
 
