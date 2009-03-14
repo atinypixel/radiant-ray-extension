@@ -102,7 +102,10 @@ namespace :ray do
         "================================================================================",
         "A SERVER TYPE IS REQUIRED! For example:",
         "rake ray:setup:restart server=mongrel_cluster",
-        "rake ray:setup:restart server=passenger"
+        "rake ray:setup:restart server=mongrel",
+        "rake ray:setup:restart server=passenger",
+        "rake ray:setup:restart server=thin",
+        "NOTE: `mongrel` and `thin` must be running as daemons"
       ]
       require_options = [ENV["server"]]
       validate_command(messages, require_options)
